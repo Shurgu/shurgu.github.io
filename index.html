@@ -2,4 +2,17 @@
 title: Shurgu.net - TO BETTER ME
 layout: default
 ---
-<p>This is Shurgu using HTML5 Boilerplate and learning Jekyll.</p>
+<ul>
+    {% for post in site.posts %}
+        <li>
+            <div class="post">
+                <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
+                {% if post.description %}
+                <span class="post-description">{{ post.description | strip_html }}</span>
+                {% else %}
+                <span class="post-description">{{ post.excerpt | strip_html }}</span>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
