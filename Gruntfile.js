@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     'use strict';
 
     require('matchdep').filterDev('grunt-!(cli)').forEach(grunt.loadNpmTasks);
