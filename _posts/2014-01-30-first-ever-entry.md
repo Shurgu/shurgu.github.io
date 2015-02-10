@@ -6,7 +6,6 @@ tags: life
 category: misc
 comments: yes
 ---
-
 Jekyll lets me control whatever, whenever, wherever.
 
 Source maps lets me develop my less directly in a browser.

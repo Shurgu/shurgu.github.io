@@ -6,7 +6,6 @@ tags: ux usefulness
 category: work
 comments: yes
 ---
-
 ## 10 items to measure usefulness
 
 Participants are asked to provide their level of agreement on a 7 point scale (1=strongly disagree and 7 = strongly agree). Here are the 10 usefulness items:

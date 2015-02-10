@@ -1,9 +1,11 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300);
 
-@mainBgColor: #eee;
+@mainBgColor: #EFF0F0;
+
 @contentBorderColor: #ccc;
 @contentBgColor: #fff;
-@contentColor: #333;
+@contentColor: #222;
+@contentActiveColor: #C82502;
 
 html, body {
     font-family: 'Open Sans', sans-serif;
@@ -18,6 +20,9 @@ ul {
 a, a:visited {
     color: @contentColor;
     text-decoration: none;
+    &:hover, &:active {
+        color: @contentActiveColor;
+    }
 }
 
 menu {
