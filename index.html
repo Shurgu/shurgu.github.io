@@ -7,7 +7,6 @@ layout: default
         <li>
             <div class="post">
                 <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
-                
                 {% if post.description %}
                 <span class="post-description">{{ post.description | strip_html }}</span>
                 {% else %}
@@ -21,7 +20,6 @@ layout: default
                     {% endfor %}
                 </span>
                 {% endif %}
-
             </div>
         </li>
     {% endfor %}

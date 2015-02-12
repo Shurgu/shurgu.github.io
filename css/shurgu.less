@@ -42,7 +42,11 @@ menuitem {
     border: 1px @contentBorderColor solid;
     margin-bottom: 10px;
     max-width: 600px;
-    border-radius: 2px;
+    border-radius: 3px;
+    box-shadow: @contentBorderColor 1px 1px 6px;
+    &:hover {
+        box-shadow: none;
+    }
 }
 
 .site {
@@ -57,7 +61,8 @@ menuitem {
     border: 1px @contentBorderColor solid;
     margin: 10px;
     max-width: 600px;
-    border-radius: 2px;
+    border-radius: 3px;
+    box-shadow: @contentBorderColor 1px 1px 6px;
 }
 
 .post-title {
