@@ -2,6 +2,12 @@
 title: Shurgu.net - TO BETTER ME
 layout: default
 ---
-<div class="container">
-	Projects
-</div>
+<ul>
+    {% for project in site.projects %}
+        <li>
+            <div class="post">
+                <a class="post-title" href="{{ project.url }}">{{ project.title }}</a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
