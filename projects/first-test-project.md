@@ -7,5 +7,6 @@ category: misc
 comments: yes
 ---
 ## Test project
+{{ page.description }}
 
-
+So it works after all. Just missing collecting all projects automaticaly.
