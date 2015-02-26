@@ -1,15 +1,25 @@
 ---
 title: Shurgu.net - TO BETTER ME
 layout: default
+projects: [
+            {name: 'First tests',
+            fileName: first-test-project,
+            description: 'Some initial unit testing',
+            tags: [test, code]}
+          ]
 ---
 <ul>
+    {% for project in page.projects %}
     <li>
         <div class="post">
-            <a class="post-title" href="/projects/first-test-project.html">Test jekyll linking</a>
-			<span class="post-description">Testing writing project page ir Markdown</span>
-			<span class="post-tags">
-			test code
-			</span>
+            <a class="post-title" href="/projects/{{project.fileName}}.html">{{project.name}}</a>
+            <span class="post-description">{{project.description}}</span>
+            <span class="post-tags">
+            {% for tag in project.tags %}
+                {{ tag }}
+            {% endfor %}
+            </span>
         </div>
     </li>
+    {% endfor %}
 </ul>
