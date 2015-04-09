@@ -1,2 +1,3 @@
 source:		.
 markdown:	kramdown
+exclude:	["node_modules"]
