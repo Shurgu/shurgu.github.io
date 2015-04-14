@@ -1,6 +1,7 @@
 # Mac crap
 .DS_Store
-
+.grunt
+_SpecRunner.html
 _site
 node_modules
 npm-debug.log
