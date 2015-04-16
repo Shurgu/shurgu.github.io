@@ -29,7 +29,14 @@ module.exports = function (grunt) {
                 globals: {
                     jQuery: true,
                     Backbone: true,
-                    _: true
+                    _: true,
+                    'describe': false,
+                    'it': false,
+                    'before': false,
+                    'beforeEach': false,
+                    'after': false,
+                    'afterEach': false,
+                    'expect': false
                 },
                 camelcase: true, // variable naming convention UPPER_CASE for constants are allowed
                 newcap: true, // All constructor function names must be capitalized
