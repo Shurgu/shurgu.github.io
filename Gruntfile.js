@@ -61,7 +61,7 @@ module.exports = function (grunt) {
             src: 'js/project*/*.js',
             options: {
                 specs: 'js/project*/specs/*Spec.js',
-                helpers: 'js/project*/specs/*Helper.js'
+                helpers: ['js/project*/specs/*Helper.js', 'js/vendor/jquery*.min.js']
             }
         }
     });
