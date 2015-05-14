@@ -42,6 +42,14 @@ describe('alpha.js', function () {
             expect($.find('.alpha-canvas').length).toBe(1);
         });
 
+        it('Should create desired width and height canvas after initialize', function () {
+            $('body').append('<div class="container" />');
+            var $el = $('.container');
+            var $canvas = window.ALPHA.init($el, 350, 350);
+            expect($canvas.width()).toBe(350);
+            expect($canvas.height()).toBe(350);
+        });
+
         it('Should return handle to canvas after initialize', function () {
             $('body').append('<div class="container" />');
             var $el = $('.container');
@@ -67,5 +75,14 @@ describe('alpha.js', function () {
             expect(data[1]).toBe(128);
             expect(data[2]).toBe(128);
         });
+
+        it('Should draw UI of desired color', function () {
+            window.ALPHA.drawUI('white');
+            var data = this.$canvas[0].getContext('2d').getImageData(0, 0, 1, 1).data;
+            expect(data[0]).toBe(255);
+            expect(data[1]).toBe(255);
+            expect(data[2]).toBe(255);
+        });
+
     });
 });

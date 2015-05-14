@@ -1,6 +1,6 @@
 (function () {
 	if (window.ALPHA) {
-		window.ALPHA.init($('.draw-container'));
-		window.ALPHA.drawUI();
+		window.ALPHA.init($('.draw-container'), $('.draw-container').width(), 350);
+		window.ALPHA.drawUI('lightgrey');
 	}
 })();
