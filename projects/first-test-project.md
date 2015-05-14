@@ -11,3 +11,7 @@ libs: [ vendor/jquery-1.10.2.min.js, project_ALPHA/alpha.js ]
 {{ page.description }}
 
 So it works after all. Including not existing libs via Markdown. Awesome. Next time gonna write some real unit tests.
+
+Next time is now. Some tests are done. TDD can be taught. :) Trying to include project output to the page.
+
+<div class="draw-container" />
