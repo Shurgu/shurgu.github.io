@@ -25,7 +25,7 @@ AlphaTest.prototype = {
         $('.alpha-canvas').remove();
     },
 
-    drawUI: function (color) {
+    draw: function (color) {
         var ctx = this.$canvas[0].getContext('2d');
         if (color) {
             ctx.fillStyle = color;
@@ -33,6 +33,11 @@ AlphaTest.prototype = {
             ctx.fillStyle = 'grey';
         }
         ctx.fillRect(0, 0, this.$canvas.width(), this.$canvas.height());
+    },
+
+    animate: function () {
+        window.requestAnimationFrame($.proxy(this.animate, this));
+        this.draw();
     }
 };
 

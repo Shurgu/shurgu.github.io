@@ -68,16 +68,16 @@ describe('alpha.js', function () {
             window.ALPHA.destroy();
         });
 
-        it('Should draw UI', function () {
-            window.ALPHA.drawUI();
+        it('Should draw', function () {
+            window.ALPHA.draw();
             var data = this.$canvas[0].getContext('2d').getImageData(0, 0, 1, 1).data;
             expect(data[0]).toBe(128);
             expect(data[1]).toBe(128);
             expect(data[2]).toBe(128);
         });
 
-        it('Should draw UI of desired color', function () {
-            window.ALPHA.drawUI('white');
+        it('Should draw of desired color', function () {
+            window.ALPHA.draw('white');
             var data = this.$canvas[0].getContext('2d').getImageData(0, 0, 1, 1).data;
             expect(data[0]).toBe(255);
             expect(data[1]).toBe(255);
