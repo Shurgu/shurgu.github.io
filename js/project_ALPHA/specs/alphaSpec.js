@@ -61,19 +61,19 @@ describe('alpha.js', function () {
 
     describe('Test drawing API', function () {
         beforeEach(function () {
-            this.$canvas = window.ALPHA.init();
+            this.$canvas = window.ALPHA.init(null, null, null, 'green');
         });
 
         afterEach(function () {
             window.ALPHA.destroy();
         });
 
-        it('Should draw', function () {
+        it('Should draw by init color', function () {
             window.ALPHA.draw();
             var data = this.$canvas[0].getContext('2d').getImageData(0, 0, 1, 1).data;
-            expect(data[0]).toBe(128);
+            expect(data[0]).toBe(0);
             expect(data[1]).toBe(128);
-            expect(data[2]).toBe(128);
+            expect(data[2]).toBe(0);
         });
 
         it('Should draw of desired color', function () {
