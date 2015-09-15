@@ -3,7 +3,7 @@ title: "Back to experiments"
 description: "Can I still code? What about javascript games? TDD at last?"
 layout: post
 tags: life code
-category: hoby
+category: hobby
 comments: yes
 ---
 ## Back to coding

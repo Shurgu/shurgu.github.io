@@ -5,7 +5,7 @@ layout: project
 tags: life
 category: misc
 comments: yes
-libs: [ vendor/jquery-1.10.2.min.js, project_ALPHA/alpha.js ]
+libs: [ vendor/jquery-1.10.2.min.js, project_ALPHA/alpha.js, project_ALPHA/alpha-app.js ]
 ---
 ## Test project
 {{ page.description }}
