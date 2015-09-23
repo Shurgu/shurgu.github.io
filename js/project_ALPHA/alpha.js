@@ -36,7 +36,12 @@ AlphaTest.prototype = {
     },
 
     draw: function (color) {
-        var ctx = this.$canvas[0].getContext('2d');
+        var ctx = null;
+        if (this.$canvas[0]) {
+            ctx = this.$canvas[0].getContext('2d');
+        } else {
+            throw this.$canvas + 'is not initialized';
+        }
 
         if (color) {
             this.$bgColor = color;
