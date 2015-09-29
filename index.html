@@ -6,7 +6,7 @@ layout: default
     {% for post in site.posts %}
         <li>
             <div class="post">
-                <a class="post-title" href="{{ post.url }}">{{ post.title }}</a>
+                <a class="post-title" href="{{ post.url }}#disqus_thread">{{ post.title }}</a>
                 {% if post.description %}
                 <span class="post-description">{{ post.description | strip_html }}</span>
                 {% else %}

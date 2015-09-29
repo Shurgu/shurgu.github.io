@@ -14,4 +14,4 @@ So it works after all. Including not existing libs via Markdown. Awesome. Next t
 
 Next time is now. Some tests are done. TDD can be learned. :) Trying to include project output to the page.
 
-<div class="draw-container" />
+<div class="draw-container"></div>
