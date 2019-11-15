@@ -1,6 +1,7 @@
 # Mac crap
 .DS_Store
 .grunt
+.jekyll-cache
 _SpecRunner.html
 _site
 node_modules
