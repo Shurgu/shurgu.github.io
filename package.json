@@ -12,6 +12,6 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "npm-check-updates": "^16.6.0"
+    "npm-check-updates": "^16.14.6"
   }
 }
