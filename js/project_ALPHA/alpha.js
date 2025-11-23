@@ -1,8 +1,8 @@
-function AlphaTest() {}
+function AlphaTest() { }
 
 AlphaTest.prototype = {
     $canvas: null,
-    $widht: 250,
+    $width: 250,
     $height: 250,
     $bgColor: 'grey',
     // init: function ($container, width, height, bgColor) {

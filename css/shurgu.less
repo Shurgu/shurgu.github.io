@@ -1,88 +1,168 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:wght@300;400;700&display=swap');
 
-@mainBgColor: #EFF0F0;
+@mainBgColor: #F9FAFB;
+@contentBgColor: #FFFFFF;
+@contentColor: #111827;
+@contentSecondaryColor: #6B7280;
+@contentActiveColor: #4F46E5;
+@contentBorderColor: rgba(0, 0, 0, 0.05);
 
-@contentBorderColor: #ccc;
-@contentBgColor: #fff;
-@contentColor: #222;
-@contentActiveColor: #C82502;
+@bodyFont: 'Inter', sans-serif;
+@headingFont: 'Merriweather', serif;
 
-html, body {
-    font-family: 'Open Sans', sans-serif;
+html,
+body {
+    font-family: @bodyFont;
     background-color: @mainBgColor;
     color: @contentColor;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: @headingFont;
+    font-weight: 700;
+    color: #111827;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
 }
 
 ul {
     list-style-type: none;
-}
-
-a, a:visited {
-    color: @contentColor;
-    text-decoration: none;
-    &:hover, &:active {
-        color: @contentActiveColor;
-    }
-}
-
-menu {
-    padding: 10px;
-    white-space: nowrap;
-}
-
-ul {
     padding: 0;
 }
 
-menuitem {
-    font-size: 1.4em;
-    font-weight: 600;
-    background-color: @contentBgColor;
-    border: 1px @contentBorderColor solid;
-    padding: 10px 0;
-    border-radius: 3px;
-    box-shadow: @contentBorderColor 1px 1px 6px;
-    &:hover {
-        box-shadow: none;
+a {
+    color: @contentActiveColor;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover,
+    &:active {
+        color: darken(@contentActiveColor, 10%);
     }
+}
+
+/* Navigation / Menu */
+menu {
+    padding: 40px 0 20px;
+    white-space: nowrap;
+    text-align: center;
+    border-bottom: 1px solid @contentBorderColor;
+    margin-bottom: 40px;
+}
+
+menuitem {
+    display: inline-block;
+    font-size: 1.3em;
+    /* Increased from 1.1em */
+    font-weight: 600;
+    margin: 0 15px;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+
     a {
-        padding: 10px 10px;
+        color: @contentSecondaryColor;
+        padding: 10px 5px;
+        position: relative;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: @contentActiveColor;
+            text-decoration: none;
+        }
+
+        /* Animated underline effect */
+        &:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: @contentActiveColor;
+            transition: width 0.3s ease;
+        }
+
+        &:hover:after {
+            width: 100%;
+        }
+    }
+
+    /* Remove old hover effects */
+    &:hover {
+        transform: none;
+        box-shadow: none;
+        border-color: transparent;
     }
 }
 
 .site {
     margin-left: auto;
     margin-right: auto;
-    max-width: 620px;
+    max-width: 800px;
+    padding: 0 20px;
 }
 
-.container, .post {
-    padding: 10px 10px;
+.container,
+.post {
+    padding: 30px;
     background-color: @contentBgColor;
-    border: 1px @contentBorderColor solid;
-    margin: 10px;
-    max-width: 600px;
-    border-radius: 3px;
-    box-shadow: @contentBorderColor 1px 1px 6px;
+    border: 1px solid @contentBorderColor;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+/* Post Card Hover Effect */
+.post {
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-color: lighten(@contentActiveColor, 40%);
+    }
 }
 
 .post-title {
-    font-size: 1.4em;
-    font-weight: 600;
+    font-family: @headingFont;
+    font-size: 1.75em;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.5em;
+    color: @contentColor;
 }
 
 .post-description {
     display: block;
-    font-size: 1.2em;
+    font-size: 1.1em;
+    color: @contentSecondaryColor;
+    margin-bottom: 1em;
+    line-height: 1.6;
 }
 
 .post-tags {
-    padding-top: 5px;
-    font-size: 0.8em;
+    padding-top: 15px;
+    border-top: 1px solid @contentBorderColor;
+    font-size: 0.85em;
     text-align: right;
     display: block;
+    color: @contentSecondaryColor;
+
+    /* Style individual tags if they are just text, or wrap them if needed */
 }
 
 .comment-count {
     float: left;
+    color: @contentActiveColor;
+    font-size: 0.9em;
+    font-weight: 500;
 }
