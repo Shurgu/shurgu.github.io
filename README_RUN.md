@@ -10,39 +10,31 @@ If you don't have Homebrew installed, run this command:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### Step 2: Install Node.js
-Use Homebrew to install Node.js (which includes `npm`):
-```bash
-brew install node
-```
+### Step 2. Install Jekyll
+The site is built with **Jekyll**, a static site generator written in Ruby.
 
-### Step 3: Install Jekyll
-You can install Jekyll directly via Homebrew:
+### Option A: Using Homebrew (Recommended)
+If you have Homebrew installed:
 ```bash
 brew install jekyll
 ```
 
-*Alternatively, if you prefer using RubyGems:*
+### Option B: Using RubyGems
+If you have Ruby installed:
 ```bash
 gem install jekyll bundler
 ```
 
-## 2. Install Project Dependencies
-
-Navigate to the project directory and install dependencies:
-```bash
-npm install
-```
-
 ## 3. Run the Project
+1.  Navigate to the project folder:
+    ```bash
+    cd /path/to/shurgu.net
+    ```
+2.  Start the local server:
+    ```bash
+    jekyll serve
+    ```
+3.  Open your browser and go to:
+    `http://localhost:4000`
 
-Start the local development server:
-```bash
-jekyll serve
-```
-The site will be available at `http://localhost:4000`.
-
-## Development Commands
-- **Compile CSS**: `grunt less`
-- **Watch for changes**: `grunt watch`
-- **Run tests**: `grunt test`
+That's it! The site uses standard CSS, so no build steps are required.
