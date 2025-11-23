@@ -5,7 +5,7 @@ description: "A look back at the recent updates to the site, from fixing bugs to
 tags: [jekyll, design, refactoring]
 ---
 
-It's been a busy couple of days for **Shurgu.net**! I decided it was time to dust off the cobwebs and give this space a much-needed update. Here's a quick rundown of what we accomplished.
+It's been a busy couple of days for **Shurgu.net**! After a **10-year hiatus** (yes, it's really been that long), I decided it was time to dust off the cobwebs and give this space a much-needed update. Here's a quick rundown of what we accomplished.
 
 ### 1. Fixing the Foundation
 First things first, we had to get the site running locally. This meant:
