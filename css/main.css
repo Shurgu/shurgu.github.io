@@ -150,7 +150,7 @@ menu {
     white-space: nowrap;
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 menuitem {
@@ -254,6 +254,41 @@ menuitem:hover {
     text-align: right;
     display: block;
     color: #6B7280;
+}
+
+.post-date {
+    float: left;
+    font-weight: 500;
+    color: #9CA3AF;
+}
+
+color: #9CA3AF;
+}
+
+.back-link {
+    display: inline-block;
+    color: #6B7280;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #4F46E5;
+}
+
+.back-link.top {
+    margin-bottom: 30px;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 20px;
+}
+
+.back-link.bottom {
+    margin-top: 30px;
+    display: block;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 20px;
 }
 
 .comment-count {
