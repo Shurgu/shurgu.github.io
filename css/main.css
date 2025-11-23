@@ -318,10 +318,6 @@ menuitem:hover {
     clear: both;
 }
 
-.clearfix {
-    /* *zoom: 1; - Removed legacy IE7 hack */
-}
-
 @media print {
     * {
         background: transparent !important;
