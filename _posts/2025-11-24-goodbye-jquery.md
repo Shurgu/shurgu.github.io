@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Goodbye jQuery, Hello Vanilla JS (with a little help from AI)"
-date:   2025-11-24 22:45:00
+date:   2025-11-24 22:45:00 +0200
 categories: tech
 tags: [javascript, jquery, refactoring, ai, agentic-workflow]
 comments: true
