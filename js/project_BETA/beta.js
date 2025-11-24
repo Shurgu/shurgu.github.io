@@ -1,6 +1,6 @@
 /*global AlphaTest */
 
-function BetaTest() {}
+function BetaTest() { }
 
 BetaTest.prototype = Object.create(AlphaTest.prototype);
 
@@ -8,7 +8,7 @@ BetaTest.prototype.x = -10;
 BetaTest.prototype.delayedX = -10;
 
 BetaTest.prototype.draw = function (color) {
-    var ctx = this.$canvas[0].getContext('2d');
+    var ctx = this.$canvas.getContext('2d');
 
     if (color) {
         this.$bgColor = color;
@@ -27,10 +27,10 @@ BetaTest.prototype.draw = function (color) {
     ctx.fillStyle = 'rgb(150,0,150)';
     this.drawDot(this.x, y, ctx);
 
-    setTimeout($.proxy(function (obj) {
+    setTimeout(function (obj) {
         obj.c.fillStyle = 'rgb(150,150,150)';
         this.drawDot(obj.a, obj.b, obj.c);
-    }, this, {
+    }.bind(this, {
         a: this.x,
         b: y,
         c: ctx

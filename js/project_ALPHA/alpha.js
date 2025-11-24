@@ -7,10 +7,12 @@ AlphaTest.prototype = {
     $bgColor: 'grey',
     // init: function ($container, width, height, bgColor) {
     init: function () {
+        var canvas = document.createElement('canvas');
+        canvas.className = 'alpha-canvas';
         if (arguments[0]) {
-            arguments[0].append('<canvas class="alpha-canvas"/>');
+            arguments[0].appendChild(canvas);
         } else {
-            $('body').append('<canvas class="alpha-canvas"/>');
+            document.body.appendChild(canvas);
         }
 
         if (arguments[1]) {
@@ -24,26 +26,29 @@ AlphaTest.prototype = {
         if (arguments[3]) {
             this.$bgColor = arguments[3];
         }
-        this.$canvas = $('.alpha-canvas');
-        this.$canvas.attr('width', this.$width);
-        this.$canvas.attr('height', this.$height);
+        this.$canvas = document.querySelector('.alpha-canvas');
+        this.$canvas.setAttribute('width', this.$width);
+        this.$canvas.setAttribute('height', this.$height);
 
         return this.$canvas;
     },
 
     destroy: function () {
-        $('.alpha-canvas').remove();
+        var canvas = document.querySelector('.alpha-canvas');
+        if (canvas) {
+            canvas.parentNode.removeChild(canvas);
+        }
     },
 
     draw: function (color) {
-        var ctx = this.$canvas[0].getContext('2d');
+        var ctx = this.$canvas.getContext('2d');
 
         if (color) {
             this.$bgColor = color;
         }
 
         ctx.fillStyle = this.$bgColor;
-        ctx.fillRect(0, 0, this.$canvas.width(), this.$canvas.height());
+        ctx.fillRect(0, 0, this.$canvas.width, this.$canvas.height);
 
         var time = new Date().getTime() * 0.002;
         var x = Math.sin(time) * (Math.round(this.$width / 2) - 10) + Math.round(this.$width / 2);
@@ -57,7 +62,7 @@ AlphaTest.prototype = {
     },
 
     animate: function () {
-        window.requestAnimationFrame($.proxy(this.animate, this));
+        window.requestAnimationFrame(this.animate.bind(this));
         this.draw();
     }
 };
