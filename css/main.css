@@ -350,6 +350,30 @@ menuitem:hover {
     clear: both;
 }
 
+@media only screen and (max-width: 600px) {
+    menu {
+        white-space: normal;
+        padding-top: 20px;
+    }
+
+    menuitem {
+        margin: 5px 10px;
+    }
+
+    .container,
+    .post {
+        padding: 15px;
+    }
+
+    .site {
+        padding: 0 15px;
+    }
+}
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
 @media print {
     * {
         background: transparent !important;
