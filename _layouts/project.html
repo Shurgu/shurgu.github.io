@@ -4,11 +4,13 @@ layout: default
 comments: true
 ---
 <div class="container">
-	{{ content }}
+    <a href="/projects.html" class="back-link top">&larr; Back to Projects</a>
+    {{ content }}
+    <a href="/projects.html" class="back-link bottom">&larr; Back to Projects</a>
 </div>
 
 {% if page.libs %}
-    {% for lib in page.libs %}
-    <script src="/js/{{ lib }}"></script>
-    {% endfor %}
+{% for lib in page.libs %}
+<script src="/js/{{ lib }}"></script>
+{% endfor %}
 {% endif %}

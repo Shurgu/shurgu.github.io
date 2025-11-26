@@ -1,27 +1,18 @@
 ---
 title: Shurgu.net - TO BETTER ME
 layout: default
-projects: [
-            {name: 'First tests',
-            fileName: first-test-project,
-            description: 'Some initial unit testing',
-            tags: [test, code]},
-            {name: 'Second test project',
-            fileName: second-test-project,
-            description: 'Some initial arcade engine',
-            tags: [test, code]}
-          ]
 ---
 <ul>
-    {% for project in page.projects %}
+    {% assign projects = site.pages | where: "layout", "project" %}
+    {% for project in projects %}
     <li>
         <div class="post">
-            <a class="post-title" href="/projects/{{project.fileName}}.html">{{project.name}}</a>
-            <span class="post-description">{{project.description}}</span>
+            <a class="post-title" href="{{ project.url }}">{{ project.title }}</a>
+            <span class="post-description">{{ project.description }}</span>
             <span class="post-tags">
-            {% for tag in project.tags %}
+                {% for tag in project.tags %}
                 {{ tag }}
-            {% endfor %}
+                {% endfor %}
             </span>
         </div>
     </li>
