@@ -28,7 +28,6 @@ GammaGame.prototype = {
 
         // Game Over Overlay
         this.$gameOverOverlay = document.createElement('div');
-        this.$gameOverOverlay.innerText = 'GAME OVER';
         this.$gameOverOverlay.style.position = 'absolute';
         this.$gameOverOverlay.style.top = '0';
         this.$gameOverOverlay.style.left = '0';
@@ -39,9 +38,27 @@ GammaGame.prototype = {
         this.$gameOverOverlay.style.fontSize = '40px';
         this.$gameOverOverlay.style.fontWeight = 'bold';
         this.$gameOverOverlay.style.display = 'none';
+        this.$gameOverOverlay.style.flexDirection = 'column';
         this.$gameOverOverlay.style.alignItems = 'center';
         this.$gameOverOverlay.style.justifyContent = 'center';
         this.$gameOverOverlay.style.zIndex = '10';
+
+        var gameOverText = document.createElement('div');
+        gameOverText.innerText = 'GAME OVER';
+        this.$gameOverOverlay.appendChild(gameOverText);
+
+        var restartBtn = document.createElement('button');
+        restartBtn.innerText = 'Start new';
+        restartBtn.style.marginTop = '20px';
+        restartBtn.style.padding = '10px 20px';
+        restartBtn.style.fontSize = '16px';
+        restartBtn.style.cursor = 'pointer';
+
+        restartBtn.addEventListener('click', function () {
+            self.restart();
+        });
+
+        this.$gameOverOverlay.appendChild(restartBtn);
 
         if (container) {
             container.style.position = 'relative';
@@ -136,6 +153,13 @@ GammaGame.prototype = {
         if (this.$gameOverOverlay) {
             this.$gameOverOverlay.style.display = 'flex';
         }
+    },
+
+    restart: function () {
+        this.$balls = [];
+        this.$gameOverOverlay.style.display = 'none';
+        this.spawnBalls(3);
+        this.render();
     },
 
     getEmptyCells: function () {
