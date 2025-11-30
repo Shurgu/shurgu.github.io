@@ -9,8 +9,10 @@ GammaGame.prototype = {
     $gridSize: 9,
     $bgColor: '#f0f0f0',
     $gridColor: '#ccc',
+    $colors: ['red', 'green', 'blue', 'yellow', 'cyan', 'magenta', 'orange'],
 
     init: function (container) {
+        this.$balls = [];
         this.$canvas = document.createElement('canvas');
         this.$canvas.className = 'gamma-canvas';
         this.$canvas.width = this.$width;
@@ -23,6 +25,39 @@ GammaGame.prototype = {
         }
 
         this.$ctx = this.$canvas.getContext('2d');
+
+        // Game Over Overlay
+        this.$gameOverOverlay = document.createElement('div');
+        this.$gameOverOverlay.innerText = 'GAME OVER';
+        this.$gameOverOverlay.style.position = 'absolute';
+        this.$gameOverOverlay.style.top = '0';
+        this.$gameOverOverlay.style.left = '0';
+        this.$gameOverOverlay.style.width = this.$width + 'px';
+        this.$gameOverOverlay.style.height = this.$height + 'px';
+        this.$gameOverOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        this.$gameOverOverlay.style.color = 'white';
+        this.$gameOverOverlay.style.fontSize = '40px';
+        this.$gameOverOverlay.style.fontWeight = 'bold';
+        this.$gameOverOverlay.style.display = 'none';
+        this.$gameOverOverlay.style.alignItems = 'center';
+        this.$gameOverOverlay.style.justifyContent = 'center';
+        this.$gameOverOverlay.style.zIndex = '10';
+
+        if (container) {
+            container.style.position = 'relative';
+            container.appendChild(this.$gameOverOverlay);
+        } else {
+            document.body.appendChild(this.$gameOverOverlay);
+        }
+
+        var self = this;
+        this.$canvas.addEventListener('click', function (e) {
+            self.handleInput(e);
+        });
+
+        this.spawnBalls(3);
+        this.render();
+
         return this.$canvas;
     },
 
@@ -52,6 +87,98 @@ GammaGame.prototype = {
         }
 
         this.$ctx.stroke();
+    },
+
+    handleInput: function (e) {
+        if (this.$gameOverOverlay.style.display !== 'none') return;
+
+        // For now, any click triggers spawning 3 new balls
+        // In the future, this will handle selecting and moving balls
+        this.spawnBalls(3);
+        this.render();
+    },
+
+    getGridCoordinates: function (x, y) {
+        var gx = Math.floor(x / this.$cellSize);
+        var gy = Math.floor(y / this.$cellSize);
+
+        if (gx >= 0 && gx < this.$gridSize && gy >= 0 && gy < this.$gridSize) {
+            return { x: gx, y: gy };
+        }
+        return null;
+    },
+
+    spawnBalls: function (count) {
+        var emptyCells = this.getEmptyCells();
+        if (emptyCells.length === 0) return;
+
+        for (var i = 0; i < count; i++) {
+            if (emptyCells.length === 0) break;
+            var randomIndex = Math.floor(Math.random() * emptyCells.length);
+            var cell = emptyCells.splice(randomIndex, 1)[0];
+            this.$balls.push({
+                x: cell.x,
+                y: cell.y,
+                color: this.getRandomColor()
+            });
+        }
+
+        this.checkGameOver();
+    },
+
+    checkGameOver: function () {
+        if (this.$balls.length >= this.$gridSize * this.$gridSize) {
+            this.showGameOver();
+        }
+    },
+
+    showGameOver: function () {
+        if (this.$gameOverOverlay) {
+            this.$gameOverOverlay.style.display = 'flex';
+        }
+    },
+
+    getEmptyCells: function () {
+        var emptyCells = [];
+        for (var x = 0; x < this.$gridSize; x++) {
+            for (var y = 0; y < this.$gridSize; y++) {
+                var occupied = false;
+                for (var i = 0; i < this.$balls.length; i++) {
+                    if (this.$balls[i].x === x && this.$balls[i].y === y) {
+                        occupied = true;
+                        break;
+                    }
+                }
+                if (!occupied) {
+                    emptyCells.push({ x: x, y: y });
+                }
+            }
+        }
+        return emptyCells;
+    },
+
+    getRandomColor: function () {
+        return this.$colors[Math.floor(Math.random() * this.$colors.length)];
+    },
+
+    render: function () {
+        this.drawGrid();
+        this.drawBalls();
+    },
+
+    drawBalls: function () {
+        if (!this.$ctx) return;
+        for (var i = 0; i < this.$balls.length; i++) {
+            var ball = this.$balls[i];
+            var cx = ball.x * this.$cellSize + this.$cellSize / 2;
+            var cy = ball.y * this.$cellSize + this.$cellSize / 2;
+            var radius = this.$cellSize / 2 - 10;
+
+            this.$ctx.fillStyle = ball.color;
+            this.$ctx.beginPath();
+            this.$ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+            this.$ctx.fill();
+        }
     }
 };
 
