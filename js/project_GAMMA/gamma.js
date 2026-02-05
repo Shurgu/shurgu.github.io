@@ -11,8 +11,12 @@ GammaGame.prototype = {
     $gridColor: '#ccc',
     $colors: ['red', 'green', 'blue', 'yellow', 'cyan', 'magenta', 'orange'],
 
+    $colors: ['red', 'green', 'blue', 'yellow', 'cyan', 'magenta', 'orange'],
+    $selectedBall: null,
+
     init: function (container) {
         this.$balls = [];
+        this.$selectedBall = null;
         this.$canvas = document.createElement('canvas');
         this.$canvas.className = 'gamma-canvas';
         this.$canvas.width = this.$width;
@@ -109,10 +113,193 @@ GammaGame.prototype = {
     handleInput: function (e) {
         if (this.$gameOverOverlay.style.display !== 'none') return;
 
-        // For now, any click triggers spawning 3 new balls
-        // In the future, this will handle selecting and moving balls
-        this.spawnBalls(3);
-        this.render();
+        var rect = this.$canvas.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        var gridPos = this.getGridCoordinates(x, y);
+
+        if (!gridPos) return;
+
+        // Check if clicked on a ball
+        var clickedBall = null;
+        for (var i = 0; i < this.$balls.length; i++) {
+            if (this.$balls[i].x === gridPos.x && this.$balls[i].y === gridPos.y) {
+                clickedBall = this.$balls[i];
+                break;
+            }
+        }
+
+        if (clickedBall) {
+            // Select the ball
+            this.$selectedBall = clickedBall;
+            this.render();
+        } else if (this.$selectedBall) {
+            // Try to move selected ball to empty spot
+            if (this.findPath(this.$selectedBall, gridPos)) {
+                this.moveBall(this.$selectedBall, gridPos);
+            }
+        }
+    },
+
+    findPath: function (start, end) {
+        // BFS to find if there is a path
+        var queue = [{ x: start.x, y: start.y }];
+        var visited = {};
+        visited[start.x + ',' + start.y] = true;
+
+        // Helper to check if a cell is blocked by a ball
+        var isBlocked = (function (x, y) {
+            for (var i = 0; i < this.$balls.length; i++) {
+                if (this.$balls[i].x === x && this.$balls[i].y === y) return true;
+            }
+            return false;
+        }).bind(this);
+
+        var dirs = [
+            { x: 0, y: -1 }, // Up
+            { x: 0, y: 1 },  // Down
+            { x: -1, y: 0 }, // Left
+            { x: 1, y: 0 }   // Right
+        ];
+
+        while (queue.length > 0) {
+            var curr = queue.shift();
+
+            if (curr.x === end.x && curr.y === end.y) {
+                return true;
+            }
+
+            for (var i = 0; i < dirs.length; i++) {
+                var nextX = curr.x + dirs[i].x;
+                var nextY = curr.y + dirs[i].y;
+
+                // Check bounds
+                if (nextX >= 0 && nextX < this.$gridSize && nextY >= 0 && nextY < this.$gridSize) {
+                    var key = nextX + ',' + nextY;
+                    if (!visited[key]) {
+                        // Check if blocked (unless it's the destination, which we know is empty from handleInput logic)
+                        // Actually handleInput ensures 'clickedBall' is null, so end is empty.
+                        // But we must traverse only empty cells.
+                        if (!isBlocked(nextX, nextY) || (nextX === end.x && nextY === end.y)) {
+                            visited[key] = true;
+                            queue.push({ x: nextX, y: nextY });
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    },
+
+    moveBall: function (ball, target) {
+        ball.x = target.x;
+        ball.y = target.y;
+        this.$selectedBall = null;
+
+        // Turn Logic:
+        var linesCleared = this.checkLines();
+
+        if (linesCleared) {
+            this.render();
+        } else {
+            this.spawnBalls(3);
+            this.checkLines();
+            this.checkGameOver();
+            this.render();
+        }
+    },
+
+    checkLines: function () {
+        var lines = [];
+        var grid = [];
+
+        // Helper to build grid for easier access
+        for (var i = 0; i < this.$gridSize; i++) {
+            grid[i] = new Array(this.$gridSize).fill(null);
+        }
+        for (var i = 0; i < this.$balls.length; i++) {
+            grid[this.$balls[i].x][this.$balls[i].y] = this.$balls[i];
+        }
+
+        // Check horizontal, vertical, diagonal /, diagonal \
+        var directions = [
+            { x: 1, y: 0 },  // Horizontal
+            { x: 0, y: 1 },  // Vertical
+            { x: 1, y: 1 },  // Diagonal \
+            { x: 1, y: -1 }  // Diagonal /
+        ];
+
+        for (var d = 0; d < directions.length; d++) {
+            var dx = directions[d].x;
+            var dy = directions[d].y;
+
+            // Iterate all cells
+            for (var x = 0; x < this.$gridSize; x++) {
+                for (var y = 0; y < this.$gridSize; y++) {
+                    var ball = grid[x][y];
+                    if (!ball) continue;
+
+                    // Check consecutive balls
+                    var currentLine = [ball];
+                    var nextX = x + dx;
+                    var nextY = y + dy;
+
+                    while (
+                        nextX >= 0 && nextX < this.$gridSize &&
+                        nextY >= 0 && nextY < this.$gridSize &&
+                        grid[nextX][nextY] &&
+                        grid[nextX][nextY].color === ball.color
+                    ) {
+                        currentLine.push(grid[nextX][nextY]);
+                        nextX += dx;
+                        nextY += dy;
+                    }
+
+                    if (currentLine.length >= 5) {
+                        // Found a line!
+
+                        // Optimization: Checked only if previous cell was NOT match to avoid duplicates
+                        var prevX = x - dx;
+                        var prevY = y - dy;
+                        var isStartOfLine = true;
+                        if (
+                            prevX >= 0 && prevX < this.$gridSize &&
+                            prevY >= 0 && prevY < this.$gridSize &&
+                            grid[prevX][prevY] &&
+                            grid[prevX][prevY].color === ball.color
+                        ) {
+                            isStartOfLine = false;
+                        }
+
+                        if (isStartOfLine) {
+                            for (var k = 0; k < currentLine.length; k++) {
+                                lines.push(currentLine[k]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (lines.length > 0) {
+            // Remove balls
+            var uniqueLines = [];
+            for (var i = 0; i < lines.length; i++) {
+                if (uniqueLines.indexOf(lines[i]) === -1) {
+                    uniqueLines.push(lines[i]);
+                }
+            }
+
+            for (var i = 0; i < uniqueLines.length; i++) {
+                var index = this.$balls.indexOf(uniqueLines[i]);
+                if (index > -1) {
+                    this.$balls.splice(index, 1);
+                }
+            }
+            return true;
+        }
+        return false;
     },
 
     getGridCoordinates: function (x, y) {
@@ -157,6 +344,7 @@ GammaGame.prototype = {
 
     restart: function () {
         this.$balls = [];
+        this.$selectedBall = null;
         this.$gameOverOverlay.style.display = 'none';
         this.spawnBalls(3);
         this.render();
@@ -202,6 +390,18 @@ GammaGame.prototype = {
             this.$ctx.beginPath();
             this.$ctx.arc(cx, cy, radius, 0, Math.PI * 2);
             this.$ctx.fill();
+
+            // Highlight selected ball
+            if (this.$selectedBall === ball) {
+                this.$ctx.strokeStyle = '#000';
+                this.$ctx.lineWidth = 3;
+                this.$ctx.stroke();
+
+                // Add an inner white glow/highlight to make it more obvious
+                this.$ctx.strokeStyle = '#fff';
+                this.$ctx.lineWidth = 1;
+                this.$ctx.stroke();
+            }
         }
     }
 };
