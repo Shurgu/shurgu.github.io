@@ -17,6 +17,7 @@ GammaGame.prototype = {
     init: function (container) {
         this.$balls = [];
         this.$selectedBall = null;
+        this.$score = 0;
         this.$canvas = document.createElement('canvas');
         this.$canvas.className = 'gamma-canvas';
         this.$canvas.width = this.$width;
@@ -27,6 +28,17 @@ GammaGame.prototype = {
         } else {
             document.body.appendChild(this.$canvas);
         }
+
+        // Score Display
+        this.$scoreDisplay = document.createElement('div');
+        this.$scoreDisplay.style.fontSize = '24px';
+        this.$scoreDisplay.style.fontWeight = 'bold';
+        this.$scoreDisplay.style.marginTop = '10px';
+        this.$scoreDisplay.style.marginBottom = '10px';
+        this.$scoreDisplay.innerText = 'Score: 0';
+
+        // Insert score display before canvas
+        this.$canvas.parentNode.insertBefore(this.$scoreDisplay, this.$canvas);
 
         this.$ctx = this.$canvas.getContext('2d');
 
@@ -291,6 +303,13 @@ GammaGame.prototype = {
                 }
             }
 
+            // Score: 10 pts for 5 balls, +2 for each extra.
+            // Simplified approximation: 2 pts per ball in valid line.
+            this.$score += lines.length * 2;
+            if (this.$scoreDisplay) {
+                this.$scoreDisplay.innerText = 'Score: ' + this.$score;
+            }
+
             for (var i = 0; i < uniqueLines.length; i++) {
                 var index = this.$balls.indexOf(uniqueLines[i]);
                 if (index > -1) {
@@ -345,6 +364,8 @@ GammaGame.prototype = {
     restart: function () {
         this.$balls = [];
         this.$selectedBall = null;
+        this.$score = 0;
+        this.$scoreDisplay.innerText = 'Score: 0';
         this.$gameOverOverlay.style.display = 'none';
         this.spawnBalls(3);
         this.render();
